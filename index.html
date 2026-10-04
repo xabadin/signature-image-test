@@ -1,12 +1,29 @@
 ﻿<!doctype html>
 <html lang="fr">
 <head><meta charset="utf-8"><title>Signature de test</title></head>
-<body style="font-family:Arial,sans-serif">
-<table cellpadding="0" cellspacing="0" border="0" role="presentation">
+<body style="font-family:Arial,sans-serif;padding:24px">
+<div id="sig"><table cellpadding="0" cellspacing="0" border="0" role="presentation">
   <tr>
     <td style="padding-right:12px"><img src="https://xabadin.github.io/signature-image-test/logo.png" width="60" height="60" alt="Test image" style="display:block;border:0"></td>
     <td style="font-family:Arial,sans-serif;font-size:14px;color:#222">TEST IMAGE<br>Signature de test</td>
   </tr>
-</table>
+</table></div>
+<p style="margin-top:32px"><button id="copy" style="font-size:16px;padding:10px 18px;cursor:pointer">Copier la signature</button> <span id="msg"></span></p>
+<script>
+document.getElementById('copy').addEventListener('click', async () => {
+  const html = document.getElementById('sig').innerHTML;
+  const text = 'TEST IMAGE\nSignature de test';
+  const msg = document.getElementById('msg');
+  try {
+    await navigator.clipboard.write([new ClipboardItem({
+      'text/html': new Blob([html], { type: 'text/html' }),
+      'text/plain': new Blob([text], { type: 'text/plain' })
+    })]);
+    msg.textContent = 'Copiée (format enrichi). Collez-la avec Ctrl+V dans l’éditeur de signature.';
+  } catch (e) {
+    msg.textContent = 'Échec de la copie : ' + e;
+  }
+});
+</script>
 </body>
 </html>
